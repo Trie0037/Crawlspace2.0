@@ -1,7 +1,52 @@
-/* div {
-    border: 1px solid red;
-} */
+/*div {
+    border: 1px solid white;
+}*/
 
-#searchDiv {
-    margin-left: 25%;
+body {
+    background: url("../images/background.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+header {
+    background: url("../images/header.jpg");
+    background-size: cover;
+    margin-bottom: 10px;
+    border-bottom: 1px solid white;
+}
+
+.appName {
+    text-align: left;
+    color: white;
+    font-size: 35px;
+    text-shadow: 2px 2px black;
+    margin-left: 50px;
+}
+
+#searchInput {
+    width: 275px;
+    margin-top: 3%;
+}
+
+.panel {
+    background-color: lightgray;
+    background-size: cover;
+    box-shadow: 2px 2px 10px lightgray;
+}
+
+#panelHeading{
+    background: url("../images/panelHeading.jpg");
+    color: white;
+}
+
+.panel-body {
+    height: 500px;
+}
+
+footer {
+    background: url("../images/header.jpg");
+    background-size: cover;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0px;
 }

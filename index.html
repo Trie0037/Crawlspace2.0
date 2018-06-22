@@ -1,62 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Crawlspace</title>
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-        <!-- Bootstrap CDN -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" 
-            integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-        <!-- CSS Link -->
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
-        <!-- Firebase Reference -->
-        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
-    </head>
-    <body>
-        
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <a class="navbar-brand text-light ml-5">Crawlspace</a>
-            <div id="searchDiv">
-                <input id="searchInput" type="text" placeholder="Search">
-                <button id="searchBtn">Search</button>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div id="navbarNavDropdown" class="navbar-collapse collapse">
-                <ul class="mr-auto"></ul> <!--Placeholder to get nav links to move to the right-->
-                <ul class="navbar-nav nav justify-content-end mr-5">
-                    <li class="nav-item">
-                        <a class="nav-link bg-dark text-light" href="">Null1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Null2</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Null3</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- End Navigation -->
 
-        <!-- Jumbotron stores information about path and displays a map -->
+<head>
+    <title>Crawlspace</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <!-- CSS Link -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
         <div class="container">
-            <div class="jumbotron">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8">
-                            // Map
-                        </div>
-                        <div class="col-md-4">
-                            // List
-                        </div>
+            <div class="row">
+                <div class="col-md 4">
+                    <span class="appName">Crawlspace</span>
+                </div>
+                <div class="col-md 4 text-center">
+                    <input id="searchInput" placeholder="Search" type="text">
+                    <button id="searchBtn">Search</button>
+                </div>
+                <div class="col-md 4 text-center">
+                    <!-- We will add functionality here later -->
+                    // Placeholder
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Panel Container to include separate panels for map and list -->
+    <div class="container">
+        <div class="row">
+            <!-- Map Display -->
+            <div class="col-md-8 map">
+                <!-- Map panel -->
+                <div class="panel">
+                    <div id="panelHeading">
+                        <h3 class="panel-title" style="text-align: center">Map</h3>
+                    </div>
+                    <!-- This is where the map will be displayed -->
+                    <div class="panel-body">
+                        <!-- Map info here -->
+                    </div>
+                </div>
+            </div>
+            <!-- List Display -->
+            <div class="col-md-4 map">
+                <!-- List panel -->
+                <div class="panel">
+                    <div id="panelHeading">
+                        <h3 class="panel-title" style="text-align: center">List</h3>
+                    </div>
+                    <!-- The list of travel information is listed here -->
+                    <div class="panel-body">
+                        <!-- List info here -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Jumbotron -->
-        <script src="assets/javascript/main.js"></script>
-    </body>
+    </div>
+    <!-- End Panel Container -->
+
+    <!-- Footer -->
+    <footer class="modal-footer">
+        <div class="container text-center">
+            <span class="text-muted">Copyright 2018</span>
+        </div>            
+    </footer> 
+
+    <!-- Javascript Link -->
+    <script src="assets/javascript/main.js"></script>
+</body>
+
 </html>
