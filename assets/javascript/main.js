@@ -2,6 +2,9 @@ $(document).ready(function () {
     //Global Variables Here
     var map, service, infowindow, pos;
 
+    //Spotcrime call, I think - requires testing
+    var spotcrime = require('spotcrime');
+
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyBfcA7tK5gAh1dxN-l7WMhHhVc2DlaVha0",
@@ -69,6 +72,8 @@ $(document).ready(function () {
             };
             service = new google.maps.places.PlacesService(map);
             service.findPlaceFromQuery(request, callback);
+            // somewhere near phoenix, az
+
         };
     };
 
@@ -80,19 +85,30 @@ $(document).ready(function () {
             radius: '500',
             type: ['bar', 'restaurant']
         };
-    
+
         service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, callback);
-    
+
     };
+
+    //To be called with each map update
+    //Data needs to be set one page by using the lat and long fields
+    function callSpotCrime() {
+        var radius = 0.01; // Miles to be searched
+        spotcrime.getCrimes(pos, radius, function (err, crimes) {
+    
+        });
+        //We need to take the response from this spotcrime call
+    }     
+
 
     //Necessary google maps function that is called upon searching
     function callback(results, status) {
-        var marker
+        var marker;
         if (status == google.maps.places.PlacesServiceStatus.OK) {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
-                
+
                 createMarker(results[i]);
             };
         };
