@@ -113,7 +113,7 @@ $(document).ready(function () {
             position: place.geometry.location,
             map: map
         });
-    }
+    };
 
     //End of Functions
 
@@ -125,6 +125,7 @@ $(document).ready(function () {
         searchByName(queryTerm);
     });
 
+    //Search by Local button clicked
     $("#searchLocal").on("click", function () {
         searchByArea();
     })
