@@ -93,7 +93,7 @@ $(document).ready(function () {
             for (var i = 0; i < results.length; i++) {
                 var place = results[i];
                 
-                addMarker(results[i]);
+                createMarker(results[i]);
             };
         };
     };
@@ -107,7 +107,13 @@ $(document).ready(function () {
         infoWindow.open(map);
     };
 
-    
+    //Create marker function that is necessary for google maps
+    function createMarker(place) {
+        new google.maps.Marker({
+            position: place.geometry.location,
+            map: map
+        });
+    }
 
     //End of Functions
 
