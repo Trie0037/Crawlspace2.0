@@ -28,8 +28,7 @@
                     <button id="searchBtn">Search</button>
                 </div>
                 <div class="col-md 4 text-center">
-                    <!-- We will add functionality here later -->
-                    // Placeholder
+                    <button id="searchLocal">Search Local Area</button>
                 </div>
             </div>
         </div>
@@ -37,17 +36,17 @@
     <!-- End Header -->
 
     <!-- Panel Container to include separate panels for map and list -->
-    <div class="container">
+    <div id="panels" class="container">
         <div class="row">
             <!-- Map Display -->
-            <div class="col-md-8 map">
+            <div  class="col-md-8 map">
                 <!-- Map panel -->
                 <div class="panel">
                     <div id="panelHeading">
                         <h3 class="panel-title" style="text-align: center">Map</h3>
                     </div>
                     <!-- This is where the map will be displayed -->
-                    <div class="panel-body">
+                    <div id="map" class="panel-body">
                         <!-- Map info here -->
                     </div>
                 </div>
@@ -60,7 +59,7 @@
                         <h3 class="panel-title" style="text-align: center">List</h3>
                     </div>
                     <!-- The list of travel information is listed here -->
-                    <div class="panel-body">
+                    <div id="list" class="panel-body">
                         <!-- List info here -->
                     </div>
                 </div>
