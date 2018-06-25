@@ -3,7 +3,7 @@ $(document).ready(function () {
     var map, service, infowindow, pos;
 
     //Spotcrime call, I think - requires testing
-    var spotcrime = require('spotcrime');
+    //var spotcrime = require('spotcrime');
 
     // Initialize Firebase
     var config = {
@@ -11,10 +11,59 @@ $(document).ready(function () {
         authDomain: "crawlspace-eefe4.firebaseapp.com",
         databaseURL: "https://crawlspace-eefe4.firebaseio.com",
         projectId: "crawlspace-eefe4",
-        storageBucket: "",
+        storageBucket: "crawlspace-eefe4.appspot.com",
         messagingSenderId: "432691243438"
     };
     firebase.initializeApp(config);
+
+    var database = firebase.database();
+
+    $("#submit-btn").click(function () {
+        //Creating variables for Train Schedule
+        var pubName = $("#pub-name").val().trim();
+        var nextDestination = $("#destination").val().trim();
+        var currentLocation = $("#current-location").val().trim();
+        var travelTime = $("#travel-time").val().trim();
+        // console.log(trainName);
+
+        database.ref().push({
+
+            Pub: pubName,
+            Destination: nextDestination,
+            Location: currentLocation,
+            Travel: travelTime,
+
+            dateAdded: firebase.database.ServerValue.TIMESTAMP
+
+        });
+    });
+
+    database.ref().orderByChild("dateAdded").on("child_added", function (childSnapshot) {
+        /*var trainFrequency = (childSnapshot.val().Frequency);
+        var dateFormat = moment().format('LLLL');
+    
+        var firstTrain = moment($("#first-train").val().trim(), "HH:mm").format();
+        var currentTime = moment();
+        var nextArrival = moment(childSnapshot.val().FirstTrain, "HH:mm");
+        while (nextArrival.isBefore(currentTime)) {
+            nextArrival.add(trainFrequency, "minutes");
+        }
+        var minutesAway = Math.abs(currentTime.diff(nextArrival, 'minutes'));
+        console.log(minutesAway);
+        console.log(nextArrival);
+        var minutesAwayTd = $("<td>").html(minutesAway);
+        var tBody = $("tbody");
+        var tRow = $("<tr>");
+        trainName = $("<td>").html(childSnapshot.val().Train);
+        trainDestination = $("<td>").html(childSnapshot.val().Destination);
+        trainFrequency = $("<td>").html(childSnapshot.val().Frequency);
+        firstTrain = $("<td>").html(childSnapshot.val().FirstTrain); 
+        nextArrivalTd = $("<td>").html(nextArrival.format('LT'));
+    
+        tRow.append(trainName, trainDestination, trainFrequency, firstTrain, nextArrivalTd, minutesAwayTd); 
+        tBody.append(tRow);*/
+    });
+
 
     //Global Variables Finished
 
@@ -24,7 +73,10 @@ $(document).ready(function () {
     //Google Maps function
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: -34.397, lng: 150.644 },
+            center: {
+                lat: -34.397,
+                lng: 150.644
+            },
             zoom: 18
         });
         infoWindow = new google.maps.InfoWindow;
@@ -68,7 +120,10 @@ $(document).ready(function () {
             var request = {
                 query: name,
                 fields: ['photos', 'formatted_address', 'name', 'rating', 'opening_hours', 'geometry'],
-                locationBias: { radius: 50, center: pos }
+                locationBias: {
+                    radius: 50,
+                    center: pos
+                }
             };
             service = new google.maps.places.PlacesService(map);
             service.findPlaceFromQuery(request, callback);
@@ -96,10 +151,10 @@ $(document).ready(function () {
     function callSpotCrime() {
         var radius = 0.01; // Miles to be searched
         spotcrime.getCrimes(pos, radius, function (err, crimes) {
-    
+
         });
         //We need to take the response from this spotcrime call
-    }     
+    }
 
 
     //Necessary google maps function that is called upon searching

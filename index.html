@@ -58,6 +58,26 @@
                     </div>
                     <!-- The list of travel information is listed here -->
                     <div id="list" class="panel-body">
+                            <form style="padding: 5px;">
+                                    <div class="form-group">
+                                        <label for="pub-name">Pub Name:</label>
+                                        <input type="text" required class="form-control" id="pub-name" placeholder="Please type in the name of the pub you would like to start at.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="destination">Destination:</label>
+                                        <input type="text" required class="form-control" id="destination" placeholder="Please type in the name of your next destination.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="current-location">Current location:</label>
+                                        <input type="text" required class="form-control" id="current-location" placeholder="What is your current address?">
+                                    </div>
+                    
+                                    <div class="form-group">
+                                        <label for="travel-time">Travel time:</label>
+                                        <input type="number" required class="form-control" id="travel-time" type="number" min="0" placeholder="The number of minutes(whole number)between pubs.">
+                                    </div>
+                                    <button type="button" class="btn btn-default" id="submit-btn">Submit</button>
+                                </form>
                         <!-- List info here -->
                     </div>
                 </div>
@@ -78,6 +98,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWffI4S98URwn_yAiK-P7GZ46k4j8SfL0&libraries=places,geometry"></script>
+
     <script src="assets/javascript/main.js"></script>
 
 </body>
