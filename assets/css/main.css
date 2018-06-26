@@ -81,6 +81,43 @@ footer {
 }
 
 #map, #list {
-    background: red;
+    background: white;
     margin: 10px;
+}
+
+/* #searchModal {
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+} */
+
+#searchModal {
+    background-color: rgba(0,0,0,0.7);
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }

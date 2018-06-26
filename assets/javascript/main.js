@@ -38,7 +38,20 @@ $(document).ready(function () {
         });
     });
 
-    database.ref().orderByChild("dateAdded").on("child_added", function (childSnapshot) {
+    database.ref().orderByChild("dateAdded").limitToLast(7).on("child_added", function (childSnapshot) {
+        var tableBody = $("tbody");
+        var tableRow = $("<tr>");
+        
+        // Place user inputs into the table
+        // Creates new td tags to place user inputs in
+        // td will be our cells
+        var pubName = $("<tD>").html(childSnapshot.val().Pub);
+        var nextDestination = $("<td>").html(childSnapshot.val().Destination);
+        var currentLocation = $("<td>").html(childSnapshot.val().Location);
+        var travelTime = $("<td>").html(childSnapshot.val().Travel);
+        tableRow.append(pubName, nextDestination, currentLocation, travelTime);
+        tableBody.append(tableRow);
+
         /*var trainFrequency = (childSnapshot.val().Frequency);
         var dateFormat = moment().format('LLLL');
     
@@ -196,10 +209,38 @@ $(document).ready(function () {
         searchByName(queryTerm);
     });
 
+    // --Modal Code Starts Here--
+    var modal = document.getElementById("searchModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("searchLocal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    // --Modal Code Stops Here--
+
     //Search by Local button clicked
-    $("#searchLocal").on("click", function () {
-        searchByArea();
-    })
+    // $("#searchLocal").on("click", function () {
+    //     searchByArea();
+        
+    // })
 
     //End of on[x] functions
 
