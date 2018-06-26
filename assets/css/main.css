@@ -14,6 +14,12 @@ header {
     border-bottom: 1px solid white;
 }
 
+.crawl {
+    font-size: 12px;
+    color: darkblue;
+    
+}
+
 .appName {
     text-align: left;
     color: white;
