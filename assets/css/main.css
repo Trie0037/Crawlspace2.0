@@ -87,7 +87,7 @@ header {
     margin-bottom: 75px;
 }
 
-#panelHeading{
+#panelHeading {
     background: url("../images/panelHeading.jpg");
     color: white;
 }
@@ -105,16 +105,22 @@ footer {
     left: 0px;
 }
 
-#map, #list {
+#map,
+#list {
     background: white;
     margin: 10px;
 }
 
+/* Background Color when modal appears */
 #searchModal {
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content */
+label {
+    color: white;
+}
+
+/* Begin Modal Content */
 .modal-content {
     background: url("../images/modal.jpg");
     background-size: cover;
@@ -123,8 +129,20 @@ footer {
     padding: 20px;
     border: 1px solid #888;
     width: 75%;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.3s;
+    animation-name: animatetop;
+    animation-duration: 0.3s
 }
 
-label {
-    color: white;
+/* Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
 }
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+/* End Modal Content */
