@@ -27,7 +27,6 @@ $(document).ready(function () {
         var nextDestination = $("#destination").val().trim();
         var currentLocation = $("#current-location").val().trim();
         var travelTime = $("#travel-time").val().trim();
-        // console.log(trainName);
 
         database.ref().push({
 
@@ -54,32 +53,7 @@ $(document).ready(function () {
         var travelTime = $("<td>").html(childSnapshot.val().Travel);
         tableRow.append(pubName, nextDestination, currentLocation, travelTime);
         tableBody.append(tableRow);
-
-        /*var trainFrequency = (childSnapshot.val().Frequency);
-        var dateFormat = moment().format('LLLL');
-    
-        var firstTrain = moment($("#first-train").val().trim(), "HH:mm").format();
-        var currentTime = moment();
-        var nextArrival = moment(childSnapshot.val().FirstTrain, "HH:mm");
-        while (nextArrival.isBefore(currentTime)) {
-            nextArrival.add(trainFrequency, "minutes");
-        }
-        var minutesAway = Math.abs(currentTime.diff(nextArrival, 'minutes'));
-        console.log(minutesAway);
-        console.log(nextArrival);
-        var minutesAwayTd = $("<td>").html(minutesAway);
-        var tBody = $("tbody");
-        var tRow = $("<tr>");
-        trainName = $("<td>").html(childSnapshot.val().Train);
-        trainDestination = $("<td>").html(childSnapshot.val().Destination);
-        trainFrequency = $("<td>").html(childSnapshot.val().Frequency);
-        firstTrain = $("<td>").html(childSnapshot.val().FirstTrain); 
-        nextArrivalTd = $("<td>").html(nextArrival.format('LT'));
-    
-        tRow.append(trainName, trainDestination, trainFrequency, firstTrain, nextArrivalTd, minutesAwayTd); 
-        tBody.append(tRow);*/
     });
-
 
     //Global Variables Finished
 

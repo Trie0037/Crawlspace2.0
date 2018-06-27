@@ -87,7 +87,7 @@ header {
     margin-bottom: 75px;
 }
 
-#panelHeading{
+#panelHeading {
     background: url("../images/panelHeading.jpg");
     color: white;
 }
@@ -105,7 +105,8 @@ footer {
     left: 0px;
 }
 
-#map, #list {
+#map,
+#list {
     background: white;
     margin: 10px;
 }
@@ -113,6 +114,10 @@ footer {
 /* Background Color when modal appears */
 #searchModal {
     background-color: rgba(0,0,0,0.4);
+}
+
+label {
+    color: white;
 }
 
 /* Begin Modal Content */
@@ -141,7 +146,3 @@ footer {
     to {top:0; opacity:1}
 }
 /* End Modal Content */
-
-label {
-    color: white;
-}
