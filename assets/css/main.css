@@ -110,11 +110,12 @@ footer {
     margin: 10px;
 }
 
+/* Background Color when modal appears */
 #searchModal {
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content */
+/* Begin Modal Content */
 .modal-content {
     background: url("../images/modal.jpg");
     background-size: cover;
@@ -123,7 +124,23 @@ footer {
     padding: 20px;
     border: 1px solid #888;
     width: 75%;
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.3s;
+    animation-name: animatetop;
+    animation-duration: 0.3s
 }
+
+/* Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+/* End Modal Content */
 
 label {
     color: white;
