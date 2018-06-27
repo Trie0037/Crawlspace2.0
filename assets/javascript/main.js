@@ -18,8 +18,11 @@ $(document).ready(function () {
 
     var database = firebase.database();
 
-    $("#submit-btn").click(function () {
-        //Creating variables for Train Schedule
+    $("#modalSubmitBtn").click(function () {
+        // Close the modal box
+        modal.style.display = "none";
+
+        // Creating variables for Train Schedule
         var pubName = $("#pub-name").val().trim();
         var nextDestination = $("#destination").val().trim();
         var currentLocation = $("#current-location").val().trim();
@@ -209,6 +212,10 @@ $(document).ready(function () {
         searchByName(queryTerm);
     });
 
+    $("#modalCancelBtn").on("click", function(){
+        modal.style.display = "none";
+    })
+
     // --Modal Code Starts Here--
     var modal = document.getElementById("searchModal");
 
@@ -220,12 +227,11 @@ $(document).ready(function () {
 
     // When the user clicks the button, open the modal 
     btn.onclick = function() {
+        $("#pub-name").val("");
+        $("#destination").val("");
+        $("#current-location").val("");
+        $("#travel-time").val("");
         modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the modal, close it
@@ -234,7 +240,7 @@ $(document).ready(function () {
             modal.style.display = "none";
         }
     }
-    // --Modal Code Stops Here--
+    // --Modal Code Ends--
 
     //Search by Local button clicked
     // $("#searchLocal").on("click", function () {

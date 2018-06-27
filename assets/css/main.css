@@ -17,7 +17,6 @@ header {
 .crawl {
     font-size: 12px;
     color: darkblue;
-    
 }
 
 .appName {
@@ -37,7 +36,8 @@ header {
     transition-duration: 0.5s;
     border-radius: 5px;
     background: rgb(168, 168, 168);
-    width: 100px;
+    width: 35px;
+    cursor: pointer;
 }
 
 #searchLocal {
@@ -46,16 +46,35 @@ header {
     background: rgb(168, 168, 168);
     width: 150px;
     margin-top: 3%;
+    cursor: pointer;
 }
 
-#searchBtn:hover {
-    transition-duration: 0.1s;
-    background: white;
+#modalSubmitBtn,
+#modalCancelBtn {
+    transition-duration: 0.5s;
+    background: rgb(168, 168, 168);
+    cursor: pointer;
 }
 
 #searchLocal:hover {
     transition-duration: 0.1s;
     background: white;
+}
+
+#searchBtn:hover {
+    transition-duration: 0.1s;
+    background-color: rgb(92, 255, 92);
+}
+
+
+#modalSubmitBtn:hover {
+    transition-duration: 0.1s;
+    background: rgb(92, 255, 92);
+}
+
+#modalCancelBtn:hover {
+    transition-duration: 0.1s;
+    background: rgb(255, 92, 92);
 }
 
 .panel {
@@ -91,39 +110,21 @@ footer {
     margin: 10px;
 }
 
-/* #searchModal {
-    width: 80%;
-    margin: auto;
-    margin-top: 100px;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-} */
-
 #searchModal {
     background-color: rgba(0,0,0,0.7);
 }
 
 /* Modal Content */
 .modal-content {
-    background-color: #fefefe;
+    background: url("../images/modal.jpg");
+    background-size: cover;
     margin: auto;
     margin-top: 50px;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 75%;
 }
 
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+label {
+    color: white;
 }
