@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    // Initially disables the modal submit button
+    $("#modalSubmitBtn").prop("disabled", true);
+    // Enables the submit button only when there is text in the dialog box
+    // Diables the button if text is not present
+    $(".input").keyup(function(){
+        if($("#currentPub").val() == "" || $("#destination").val() == "" || $("#travel-time").val() == ""){
+            $("#modalSubmitBtn").prop("disabled", true);
+        } else {
+            $("#modalSubmitBtn").removeAttr("disabled");
+        }
+    })
+
     //Global Variables Here
     var map, service, infowindow, pos;
 

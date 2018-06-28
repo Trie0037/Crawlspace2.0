@@ -8,8 +8,6 @@
         crossorigin="anonymous">
     <!-- CSS Link -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
-    <!-- Firebase Reference -->
-
 </head>
 
 <body>
@@ -61,39 +59,34 @@
                         <!-- List info here -->
                         <table>
                             <tbody>
-                                <tr class="crawl">
-                                    <th>Current Pub |</th>
-                                    <th>Destination Pub |</th>
-                                    <th>Travel Time</th>
+                                <tr>
+                                    <th>Pub Name</th>
+                                    <th id="middle">Destination</th>
+                                    <th>Time Travel</th>
                                 </tr>
                             </tbody>
                         </table>
-                        <tbody>
-                        </tbody>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Search modal -->
     <div id="searchModal" class="modal">
         <div class="modal-content">
             <form style="padding: 5px;">
                 <div class="form-group">
                     <label for="pub-name">Current Pub:</label>
-                    <input type="text" class="form-control" id="currentPub" placeholder="Please type in the name of the pub you would like to start at."
-                        required>
+                    <input type="text" class="form-control input" id="currentPub" placeholder="Please type in the name of the pub you would like to start at.">
                 </div>
                 <div class="form-group">
                     <label for="destination">Destination Pub:</label>
-                    <input type="text" class="form-control" id="destination" placeholder="Please type in the name of your next destination."
-                        required>
+                    <input type="text" class="form-control input" id="destination" placeholder="Please type in the name of your next destination.">
                 </div>
                 <div class="form-group">
                     <label for="travel-time">Travel time:</label>
-                    <input type="number" class="form-control" id="travel-time" type="number" min="0" placeholder="The number of minutes (whole number) between pubs."
-                        required>
+                    <input type="number" class="form-control input" id="travel-time" type="number" min="0" placeholder="The number of minutes (whole number) between pubs.">
                 </div>
                 <button type="button" class="btn btn-default" id="modalSubmitBtn">Submit</button>
                 <button type="button" class="btn btn-default" id="modalCancelBtn">Cancel</button>
