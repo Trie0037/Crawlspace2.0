@@ -165,6 +165,9 @@ $(document).ready(function () {
               scaledSize: new google.maps.Size(25, 25)
             };
 
+            //Calls the searchCrimeAPI with the searched location as center point.
+            searchCrimeAPI(place.geometry.location.lat(),place.geometry.location.lng())
+
             // Create a marker for each place.
             markers.push(new google.maps.Marker({
               map: map,
@@ -198,6 +201,21 @@ $(document).ready(function () {
         service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, callback);
 
+    };
+
+
+    function searchCrimeAPI(lat, long) {
+      var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 3200) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
+  
+      $.ajax({
+        url: "https://data.sfgov.org/resource/cuks-n6tp.json?$query=" + queryString,
+        type: "GET",
+        data: {
+          //"$$app_token": "YOURAPPTOKENHERE"
+        }
+      }).done(function (data) {
+        console.log(data);
+      });
     };
 
     //Necessary google maps function that is called upon searching
