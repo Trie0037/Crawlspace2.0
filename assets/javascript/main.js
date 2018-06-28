@@ -33,7 +33,7 @@ $(document).ready(function () {
     $("#modalSubmitBtn").click(function () {
         // Close the modal box
         modal.style.display = "none";
-
+        $("#modalSubmitBtn").prop("disabled", true);
         // Creating variables for Train Schedule
         var pubName = $("#currentPub").val().trim();
         var nextDestination = $("#destination").val().trim();
@@ -203,6 +203,7 @@ $(document).ready(function () {
 
     };
 
+
     function searchCrimeAPI(lat, long) {
       var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 3200) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
   
@@ -258,39 +259,6 @@ $(document).ready(function () {
     //     // searchByName(queryTerm);
     // });
 
-    $("#modalCancelBtn").on("click", function(){
-        modal.style.display = "none";
-    })
-
-    // --Modal Code Starts Here--
-    var modal = document.getElementById("searchModal");
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("searchLocal");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-        $("#currentPub").val("");
-        $("#destination").val("");
-        $("#travel-time").val("");
-        modal.style.display = "block";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    // --Modal Code Ends--
-
-    // Loading gif
-
-    
-
     //Search by Local button clicked
     // $("#searchLocal").on("click", function () {
     //     searchByArea();
@@ -304,3 +272,32 @@ $(document).ready(function () {
 
     //End of all JS Data
 })
+
+// --Modal Code Starts Here--
+var modal = document.getElementById("searchModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("searchLocal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    $("#currentPub").val("");
+    $("#destination").val("");
+    $("#travel-time").val("");
+    modal.style.display = "block";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+$("#modalCancelBtn").on("click", function(){
+    modal.style.display = "none";
+})
+// --Modal Code Ends--
