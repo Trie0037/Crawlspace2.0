@@ -12,6 +12,13 @@ header {
     background-size: cover;
     margin-bottom: 10px;
     border-bottom: 1px solid white;
+    position: fixed;
+    width: 100%;
+    left: 0px;
+}
+
+.map {
+    margin-top: 70px;
 }
 
 .appName {
@@ -106,10 +113,7 @@ footer {
     margin: 10px;
 }
 
-/* Background Color when modal appears */
-#searchModal {
-    background-color: rgba(0,0,0,0.4);
-}
+
 
 label {
     color: white;
@@ -128,6 +132,11 @@ label {
     -webkit-animation-duration: 0.3s;
     animation-name: animatetop;
     animation-duration: 0.3s
+}
+
+/* Background Color when modal appears */
+#searchModal {
+    background-color: rgba(0,0,0,0.4);
 }
 
 /* Animation */
@@ -154,4 +163,12 @@ th {
 
 td {
     border-bottom: 1px solid lightgrey;
+}
+
+.controls {
+    height: 30px;
+    position: fixed !important;
+    left: 50% !important;
+    top: -15px !important;
+    transform:translate(-50%, -50%);
 }
