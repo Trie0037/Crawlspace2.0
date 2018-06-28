@@ -1,6 +1,33 @@
 $(document).ready(function () {
-  //Global Variables Here
-  var map, service, infowindow, pos;
+
+    // Initially disables the modal submit button
+    $("#modalSubmitBtn").prop("disabled", true);
+    // Enables the submit button only when there is text in the dialog box
+    // Diables the button if text is not present
+    $(".input").keyup(function(){
+        if($("#currentPub").val() == "" || $("#destination").val() == "" || $("#travel-time").val() == ""){
+            $("#modalSubmitBtn").prop("disabled", true);
+        } else {
+            $("#modalSubmitBtn").removeAttr("disabled");
+        }
+    })
+
+    //Global Variables Here
+    var map, service, infowindow, pos;
+
+    //Spotcrime call, I think - requires testing
+    //var spotcrime = require('spotcrime');
+
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyBfcA7tK5gAh1dxN-l7WMhHhVc2DlaVha0",
+        authDomain: "crawlspace-eefe4.firebaseapp.com",
+        databaseURL: "https://crawlspace-eefe4.firebaseio.com",
+        projectId: "crawlspace-eefe4",
+        storageBucket: "crawlspace-eefe4.appspot.com",
+        messagingSenderId: "432691243438"
+    };
+    firebase.initializeApp(config);
 
   //Spotcrime call, I think - requires testing
   //var spotcrime = require('spotcrime');
