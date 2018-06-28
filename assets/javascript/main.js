@@ -23,16 +23,14 @@ $(document).ready(function () {
         modal.style.display = "none";
 
         // Creating variables for Train Schedule
-        var pubName = $("#pub-name").val().trim();
+        var pubName = $("#currentPub").val().trim();
         var nextDestination = $("#destination").val().trim();
-        var currentLocation = $("#current-location").val().trim();
         var travelTime = $("#travel-time").val().trim();
 
         database.ref().push({
 
             Pub: pubName,
             Destination: nextDestination,
-            Location: currentLocation,
             Travel: travelTime,
 
             dateAdded: firebase.database.ServerValue.TIMESTAMP
@@ -49,9 +47,8 @@ $(document).ready(function () {
         // td will be our cells
         var pubName = $("<tD>").html(childSnapshot.val().Pub);
         var nextDestination = $("<td>").html(childSnapshot.val().Destination);
-        var currentLocation = $("<td>").html(childSnapshot.val().Location);
         var travelTime = $("<td>").html(childSnapshot.val().Travel);
-        tableRow.append(pubName, nextDestination, currentLocation, travelTime);
+        tableRow.append(pubName, nextDestination, travelTime);
         tableBody.append(tableRow);
     });
 
@@ -201,9 +198,8 @@ $(document).ready(function () {
 
     // When the user clicks the button, open the modal 
     btn.onclick = function() {
-        $("#pub-name").val("");
+        $("#currentPub").val("");
         $("#destination").val("");
-        $("#current-location").val("");
         $("#travel-time").val("");
         modal.style.display = "block";
     }
@@ -215,6 +211,10 @@ $(document).ready(function () {
         }
     }
     // --Modal Code Ends--
+
+    // Loading gif
+
+    
 
     //Search by Local button clicked
     // $("#searchLocal").on("click", function () {
