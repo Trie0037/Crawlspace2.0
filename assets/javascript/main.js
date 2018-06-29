@@ -176,6 +176,8 @@ $(document).ready(function () {
               position: place.geometry.location
             }));
 
+            console.log(markers);
+
             if (place.geometry.viewport) {
               // Only geocodes have viewport.
               bounds.union(place.geometry.viewport);
@@ -215,7 +217,27 @@ $(document).ready(function () {
         }
       }).done(function (data) {
         console.log(data);
+        for (var i=0; i < data.length; i++) {
+          addCrimeMarker(data[i].location.coordinates[0], data[i].location.coordinates[1]);
+          //Add the following line of code if setting marker styles by crime category
+          //addCrimeMarker(data[i].category);
+        }
+        
       });
+    };
+
+    function addCrimeMarker(lat, long) {
+      var crimePos = {
+        lat: lat,
+        lng: long
+      };
+      console.log(crimePos)
+      var marker = new google.maps.Marker({
+        position: crimePos,
+        map: map,
+        title: 'Hello World!'
+      });
+      console.log(marker)
     };
 
     //Necessary google maps function that is called upon searching
