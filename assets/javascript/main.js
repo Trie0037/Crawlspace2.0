@@ -126,7 +126,6 @@ $(document).ready(function () {
           scaledSize: new google.maps.Size(25, 25)
         };
 
-
         //Initialize variables for SF Crime AJAX search
         var lat = place.geometry.location.lat();
         var long = place.geometry.location.lng();
@@ -160,7 +159,8 @@ $(document).ready(function () {
           map: map,
           icon: icon,
           title: place.name,
-          position: place.geometry.location
+          position: place.geometry.location,
+          animation: google.maps.Animation.DROP
         }));
         console.log(markers);
 
@@ -220,8 +220,6 @@ $(document).ready(function () {
   });
 
   ///END FUNCTION CALLS
-
-
 });
 
 ///END///
