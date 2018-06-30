@@ -19,7 +19,7 @@ $(document).ready(function () {
 
   ////GLOBAL VARIABLES///
 
-  var map, infowindow;
+  var map, infowindow, service;
 
   // Initialize Firebase
   var config = {
@@ -50,7 +50,6 @@ $(document).ready(function () {
   //Places a marker on map using Google's style
   //Adds an event listener to this marker upon user click.
   function createMarker(place) {
-    var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
       map: map,
       position: place.geometry.location
@@ -67,7 +66,7 @@ $(document).ready(function () {
   //Then adds a listener for user searches.
   //Moves map and searches when user searches. Grabs crime when searching in SF.
   function initAutocomplete() {
-    var map = new google.maps.Map(document.getElementById('map'), {
+      map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 37.774, lng: -122.419 },
       zoom: 15,
       mapTypeId: 'roadmap'
@@ -75,7 +74,7 @@ $(document).ready(function () {
 
     //Moves the map view to the default San Fran position
     infowindow = new google.maps.InfoWindow();
-    var service = new google.maps.places.PlacesService(map);
+    service = new google.maps.places.PlacesService(map);
 
     //Searches this area for bars
     service.nearbySearch({
