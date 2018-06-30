@@ -16,13 +16,13 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-md 4">
-                    <span class="appName">Crawlspace</span>
+                <div class="col-md-4 appName">
+                    Crawlspace
                 </div>
-                <div class="col-md 4">
+                <div class="col-md-4">
                     <input id="pac-input" class="controls" type="text" placeholder=" Search A Location">
                 </div>
-                <div class="col-md 4 text-center">
+                <div class="col-md-4 text-center">
                     <button id="searchLocal" class="btn btn-sm">Search Local Area</button>
                 </div>
             </div>
@@ -32,7 +32,7 @@
 
     <!-- Panel Container to include separate panels for map and list -->
     <div id="panels" class="container">
-        <div class="row">
+        <div class="row mobileFixMap">
             <!-- Map Display -->
             <div class="col-md-8 map">
                 <!-- Map panel -->
@@ -51,7 +51,7 @@
                 <!-- List panel -->
                 <div class="panel">
                     <div id="panelHeading">
-                        <h3 class="panel-title" style="text-align: center">List</h3>
+                        <h3 class="panel-title mobileFixList" style="text-align: center">List</h3>
                     </div>
                     <!-- The list of travel information is listed here -->
                     <div id="list" class="panel-body">
@@ -59,8 +59,8 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <th>Pub Name</th>
-                                    <th id="middle">Destination</th>
+                                    <th>Current</th>
+                                    <th>Destination</th>
                                     <th>Time Travel</th>
                                 </tr>
                             </tbody>
@@ -70,29 +70,30 @@
             </div>
         </div>
     </div>
+    <!-- End Panel Container -->
 
-    <!-- Search modal -->
+    <!-- Search Modal -->
     <div id="searchModal" class="modal">
         <div class="modal-content">
             <form style="padding: 5px;">
                 <div class="form-group">
-                    <label for="pub-name">Current Pub:</label>
-                    <input type="text" class="form-control input" id="currentPub" placeholder="Please type in the name of the pub you would like to start at.">
+                    <label for="pub-name">Current Pub</label>
+                    <input type="text" class="form-control input" id="currentPub" placeholder="Required field">
                 </div>
                 <div class="form-group">
-                    <label for="destination">Destination Pub:</label>
-                    <input type="text" class="form-control input" id="destination" placeholder="Please type in the name of your next destination.">
+                    <label for="destination">Destination Pub</label>
+                    <input type="text" class="form-control input" id="destination" placeholder="Required field">
                 </div>
                 <div class="form-group">
-                    <label for="travel-time">Travel time:</label>
-                    <input type="number" class="form-control input" id="travel-time" type="number" min="0" placeholder="The number of minutes (whole number) between pubs.">
+                    <label for="travel-time">Travel time (in minutes)</label>
+                    <input type="number" class="form-control input" id="travel-time" type="number" min="0" placeholder="Required field">
                 </div>
                 <button type="button" class="btn btn-default" id="modalSubmitBtn">Submit</button>
                 <button type="button" class="btn btn-default" id="modalCancelBtn">Cancel</button>
             </form>
         </div>
     </div>
-    <!-- End Panel Container -->
+    <!-- End Search Modal -->
 
     <!-- Footer -->
     <footer class="modal-footer">

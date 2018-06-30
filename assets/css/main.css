@@ -22,11 +22,10 @@ header {
 }
 
 .appName {
-    text-align: left;
+    text-align: center;
     color: white;
     font-size: 35px;
-    text-shadow: 2px 2px black;
-    margin-left: 50px;
+    text-shadow: 2px 2px gray;
 }
 
 #pac-input {
@@ -63,13 +62,7 @@ header {
     background: white;
 }
 
-#searchBtn:hover {
-    transition-duration: 0.1s;
-    background-color: rgb(92, 255, 92);
-}
-
-
-#modalSubmitBtn:hover {
+#modalSubmitBtn:hover{
     transition-duration: 0.1s;
     background: rgb(92, 255, 92);
 }
@@ -107,13 +100,16 @@ footer {
     left: 0px;
 }
 
-#map,
-#list {
+#map {
     background: white;
     margin: 10px;
 }
 
-
+#list {
+    background: url("../images/listBackground.jpg");
+    background-size: cover;
+    padding: 7px;
+}
 
 label {
     color: white;
@@ -127,7 +123,7 @@ label {
     margin-top: 10%;
     padding: 20px;
     border: 1px solid #888;
-    width: 65%;
+    width: 45%;
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.3s;
     animation-name: animatetop;
@@ -139,7 +135,7 @@ label {
     background-color: rgba(0,0,0,0.4);
 }
 
-/* Animation */
+/* Modal Animation */
 @-webkit-keyframes animatetop {
     from {top:-300px; opacity:0} 
     to {top:0; opacity:1}
@@ -157,7 +153,6 @@ table {
 
 th {
     text-align: center;
-    text-decoration: underline;
     border: 1px solid lightgrey;
 }
 
@@ -165,10 +160,57 @@ td {
     border-bottom: 1px solid lightgrey;
 }
 
+/* Main Search Box */
 .controls {
     height: 30px;
     position: fixed !important;
     left: 50% !important;
-    top: -15px !important;
+    top: -2% !important;
     transform:translate(-50%, -50%);
+}
+
+/* ----Media Queries---- */
+@media only screen and (max-width:991px) {
+    .controls {
+        height: 30px;
+        position: fixed !important;
+        left: 50% !important;
+        top: -1% !important;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    header {
+        position: initial;
+    }
+
+    .controls {
+        position: relative !important;
+        top: 10px !important;
+    }
+
+    .map {
+        margin-top: 90px;
+    }
+
+    .mobileFixMap {
+        margin-top: -90px;
+    }
+
+    .mobileFixList {
+        margin-top: -90px;
+    }
+
+    #searchLocal {
+        margin-top: 0%;
+        margin-bottom: 5px;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
 }
