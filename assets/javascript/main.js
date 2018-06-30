@@ -1,6 +1,10 @@
 $(document).ready(function () {
+
+  ///MODAL///
+
   // Initially disables the modal submit button
   $("#modalSubmitBtn").prop("disabled", true);
+
   // Enables the submit button only when there is text in the dialog box
   // Diables the button if text is not present
   $(".input").keyup(function () {
@@ -8,14 +12,14 @@ $(document).ready(function () {
       $("#modalSubmitBtn").prop("disabled", true);
     } else {
       $("#modalSubmitBtn").removeAttr("disabled");
-    }
-  })
+    };
+  });
 
-  //Global Variables Here
-  var map, service, infowindow, pos;
+  ///END MODAL///
 
-  //Spotcrime call, I think - requires testing
-  //var spotcrime = require('spotcrime');
+  ////GLOBAL VARIABLES///
+
+  var map, infowindow;
 
   // Initialize Firebase
   var config = {
@@ -30,78 +34,21 @@ $(document).ready(function () {
 
   var database = firebase.database();
 
-  $("#modalSubmitBtn").click(function () {
-    // Close the modal box
-    modal.style.display = "none";
-    $("#modalSubmitBtn").prop("disabled", true);
-    // Creating variables for Train Schedule
-    var pubName = $("#currentPub").val().trim();
-    var nextDestination = $("#destination").val().trim();
-    var travelTime = $("#travel-time").val().trim();
+  ///END GLOBAL VARIABLES///
 
-    database.ref().push({
+  ///FUNCTIONS///
 
-      Pub: pubName,
-      Destination: nextDestination,
-      Travel: travelTime,
-
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
-
-    });
-  });
-
-  database.ref().orderByChild("dateAdded").limitToLast(7).on("child_added", function (childSnapshot) {
-    var tableBody = $("tbody");
-    var tableRow = $("<tr>");
-
-    // Place user inputs into the table
-    // Creates new td tags to place user inputs in
-    // td will be our cells
-    var pubName = $("<tD>").html(childSnapshot.val().Pub);
-    var nextDestination = $("<td>").html(childSnapshot.val().Destination);
-    var travelTime = $("<td>").html(childSnapshot.val().Travel);
-    tableRow.append(pubName, nextDestination, travelTime);
-    tableBody.append(tableRow);
-  });
-
-  //Global Variables Finished
-
-  //Functions
-
-  //calls initial map and asks user to use local data.
-  //Google Maps function
-  // This example requires the Places library. Include the libraries=places
-  // parameter when you first load the API. For example:
-  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-  var map;
-  var infowindow;
-
-  function initMap() {
-    var sanFran = { lat: 37.774, lng: -122.419 };
-
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: sanFran,
-      zoom: 15
-    });
-
-    infowindow = new google.maps.InfoWindow();
-    var service = new google.maps.places.PlacesService(map);
-    service.nearbySearch({
-      location: sanFran,
-      radius: 500,
-      type: ['store']
-    }, callback);
-  }
-
+  //Runs the createMarker function on map if Google accepts
   function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
         createMarker(results[i]);
-      }
-    }
-  }
+      };
+    };
+  };
 
+  //Places a marker on map using Google's style
+  //Adds an event listener to this marker upon user click.
   function createMarker(place) {
     var placeLoc = place.geometry.location;
     var marker = new google.maps.Marker({
@@ -113,18 +60,29 @@ $(document).ready(function () {
       infowindow.setContent(place.name);
       infowindow.open(map, this);
     });
-  }
+  };
 
-  //Searches for places by name submitted. If the user submits search data
-  //that doesn't match with restaurant names, do a custom search
+  //Calls an Initial map using Google Maps' places library.
+  //EX: <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+  //Then adds a listener for user searches.
+  //Moves map and searches when user searches. Grabs crime when searching in SF.
   function initAutocomplete() {
     var map = new google.maps.Map(document.getElementById('map'), {
       center: { lat: 37.774, lng: -122.419 },
-      zoom: 13,
+      zoom: 15,
       mapTypeId: 'roadmap'
-
-
     });
+
+    //Moves the map view to the default San Fran position
+    infowindow = new google.maps.InfoWindow();
+    var service = new google.maps.places.PlacesService(map);
+
+    //Searches this area for bars
+    service.nearbySearch({
+      location: map.center,
+      radius: 500,
+      type: ['restaurant', 'bar']
+    }, callback);
 
     // Create the search box and link it to the UI element.
     var input = document.getElementById('pac-input');
@@ -137,6 +95,7 @@ $(document).ready(function () {
     });
 
     var markers = [];
+
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
     searchBox.addListener('places_changed', function () {
@@ -144,7 +103,7 @@ $(document).ready(function () {
 
       if (places.length == 0) {
         return;
-      }
+      };
 
       // Clear out the old markers.
       markers.forEach(function (marker) {
@@ -167,10 +126,14 @@ $(document).ready(function () {
           scaledSize: new google.maps.Size(25, 25)
         };
 
+
+        //Initialize variables for SF Crime AJAX search
         var lat = place.geometry.location.lat();
         var long = place.geometry.location.lng();
-        var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 3200) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
+        //Remove "limit" below or increase for final product
+        var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 1600) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
 
+        //Searches the SF crime database
         $.ajax({
           url: "https://data.sfgov.org/resource/cuks-n6tp.json?$query=" + queryString,
           type: "GET",
@@ -179,37 +142,20 @@ $(document).ready(function () {
           }
         }).done(function (data) {
           console.log(data);
+          //Loops through the amount of crimes returned
           for (var i = 0; i < data.length; i++) {
-            data[i].location.coordinates[0], data[i].location.coordinates[1];
-            var crimePos = {
-              lat: data[i].location.coordinates[0],
-              lng: data[i].location.coordinates[1]
-            };
+            var crimePos = new google.maps.LatLng(data[i].location.coordinates[0], data[i].location.coordinates[1])
+
+            //Adds the current crime to the map as a marker
             markers.push(new google.maps.Marker({
-              position: crimePos,
               map: map,
-              title: 'Hello World!'
+              title: "Hello World!",
+              position: crimePos
             }));
           };
         });
 
-        //Calls the searchCrimeAPI with the searched location as center point.
-        // crimeData = searchCrimeAPI(place.geometry.location.lat(), place.geometry.location.lng())
-        // console.log(crimeData)
-
-        // for (var i = 0; i < crimeData.length; i++) {
-        //   data[i].location.coordinates[0], data[i].location.coordinates[1];
-        //   var crimePos = {
-        //     lat: data[i].location.coordinates[0],
-        //     lng: data[i].location.coordinates[1]
-        //   };
-        //   // Create a marker for each place.
-        //   markers.push(new google.maps.Marker({
-        //     position: crimePos,
-        //     map: map,
-        //     title: 'Hello World!'
-        //   }));
-        // }
+        //Pushes the searched markers to a list of markers
         markers.push(new google.maps.Marker({
           map: map,
           icon: icon,
@@ -218,126 +164,73 @@ $(document).ready(function () {
         }));
         console.log(markers);
 
+        //Checks if location is within viewport, if not, moves map to fit search
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
           bounds.union(place.geometry.viewport);
         } else {
           bounds.extend(place.geometry.location);
-        }
+        };
       });
       map.fitBounds(bounds);
     });
-  }
+  };
+
+  ///END FUNCTIONS///
+
+  ///EVENT LISTENERS///
+
+  //Listens for when the Submit button is clicked
+  $("#modalSubmitBtn").click(function () {
+    // Close the modal box
+    modal.style.display = "none";
+    $("#modalSubmitBtn").prop("disabled", true);
+
+    // Creating variables for modal input values
+    var pubName = $("#currentPub").val().trim();
+    var nextDestination = $("#destination").val().trim();
+    var travelTime = $("#travel-time").val().trim();
+
+    database.ref().push({
+      Pub: pubName,
+      Destination: nextDestination,
+      Travel: travelTime,
+      dateAdded: firebase.database.ServerValue.TIMESTAMP
+    });
+  });
+
+  ///END EVENT LISTENERS///
+
+  ///FUNCTION CALLS///
 
   initAutocomplete();
 
-  //Called when the search by area button is clicked. Searches by location
-  //and uses default types of bar and restaurant
-  function searchByArea() {
-    var request = {
-      location: pos,
-      radius: '500',
-      type: ['bar', 'restaurant']
-    };
+  database.ref().orderByChild("dateAdded").limitToLast(7).on("child_added", function (childSnapshot) {
+    var tableBody = $("tbody");
+    var tableRow = $("<tr>");
 
-    service = new google.maps.places.PlacesService(map);
-    service.nearbySearch(request, callback);
+    // Place user inputs into the table
+    // Creates new td tags to place user inputs in
+    // td will be our cells
+    var pubName = $("<tD>").html(childSnapshot.val().Pub);
+    var nextDestination = $("<td>").html(childSnapshot.val().Destination);
+    var travelTime = $("<td>").html(childSnapshot.val().Travel);
+    tableRow.append(pubName, nextDestination, travelTime);
+    tableBody.append(tableRow);
+  });
 
-  };
+  ///END FUNCTION CALLS
 
 
-  // function searchCrimeAPI(lat, long) {
-  //   var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 3200) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
+});
 
-  //   $.ajax({
-  //     url: "https://data.sfgov.org/resource/cuks-n6tp.json?$query=" + queryString,
-  //     type: "GET",
-  //     data: {
-  //       //"$$app_token": "YOURAPPTOKENHERE"
-  //     }
-  //   }).done(function (data) {
-  //     console.log(data);
-  //     return data;
-  //   });
-  // };
+///END///
 
-  function addCrimeMarker(lat, long) {
-    var crimePos = {
-      lat: lat,
-      lng: long
-    };
-    console.log(crimePos)
-    var marker = new google.maps.Marker({
-      position: crimePos,
-      map: map,
-      title: 'Hello World!'
-    });
-    console.log(marker)
-  };
+///MODAL///
 
-  //Necessary google maps function that is called upon searching
-  function callback(results, status) {
-    var marker;
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-
-        createMarker(results[i]);
-      };
-    };
-  };
-
-  //Necessary google maps function that is called upon searching
-  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-      'Error: The Geolocation service failed.' :
-      'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-  };
-
-  //Create marker function that is necessary for google maps
-  function createMarker(place) {
-    new google.maps.Marker({
-      position: place.geometry.location,
-      map: map
-    });
-  };
-  createMarker();
-
-  //End of Functions
-
-  //On[x] functions
-
-  // Search button click function
-  // $("#searchBtn").on("click", function () {
-  //     var queryTerm = $("#pac-input").val().trim(); 
-
-  //     // searchByName(queryTerm);
-  // });
-
-  //Search by Local button clicked
-  // $("#searchLocal").on("click", function () {
-  //     searchByArea();
-
-  // })
-
-  //End of on[x] functions
-
-  //Function Calls
-  initMap();
-
-  //End of all JS Data
-})
-
-// --Modal Code Starts Here--
 var modal = document.getElementById("searchModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("searchLocal");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+var btn = document.getElementById("searchLocal"); // Get the button that opens the modal
+var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
 
 // When the user clicks the button, open the modal 
 btn.onclick = function () {
@@ -357,4 +250,94 @@ window.onclick = function (event) {
 $("#modalCancelBtn").on("click", function () {
   modal.style.display = "none";
 })
-// --Modal Code Ends--
+
+///END MODAL///
+
+///REMOVED CODE///
+// Search button click function
+// $("#searchBtn").on("click", function () {
+//     var queryTerm = $("#pac-input").val().trim(); 
+
+//     // searchByName(queryTerm);
+// });
+
+//Search by Local button clicked
+// $("#searchLocal").on("click", function () {
+//     searchByArea();
+
+// })
+
+//Called when the search by area button is clicked. Searches by location
+//and uses default types of bar and restaurant
+// function searchByArea() {
+//   var request = {
+//     location: pos,
+//     radius: '500',
+//     type: ['bar', 'restaurant']
+//   };
+
+//   service = new google.maps.places.PlacesService(map);
+//   service.nearbySearch(request, callback);
+
+// };
+
+// function searchCrimeAPI(lat, long) {
+//   var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 3200) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
+
+//   $.ajax({
+//     url: "https://data.sfgov.org/resource/cuks-n6tp.json?$query=" + queryString,
+//     type: "GET",
+//     data: {
+//       //"$$app_token": "YOURAPPTOKENHERE"
+//     }
+//   }).done(function (data) {
+//     console.log(data);
+//     return data;
+//   });
+// };
+
+// function addCrimeMarker(lat, long) {
+//   var crimePos = {
+//     lat: lat,
+//     lng: long
+//   };
+//   console.log(crimePos)
+//   var marker = new google.maps.Marker({
+//     position: crimePos,
+//     map: map,
+//     title: 'Hello World!'
+//   });
+//   console.log(marker)
+// };
+
+//Calls the searchCrimeAPI with the searched location as center point.
+// crimeData = searchCrimeAPI(place.geometry.location.lat(), place.geometry.location.lng())
+// console.log(crimeData)
+
+// for (var i = 0; i < crimeData.length; i++) {
+//   data[i].location.coordinates[0], data[i].location.coordinates[1];
+//   var crimePos = {
+//     lat: data[i].location.coordinates[0],
+//     lng: data[i].location.coordinates[1]
+//   };
+//   // Create a marker for each place.
+//   markers.push(new google.maps.Marker({
+//     position: crimePos,
+//     map: map,
+//     title: 'Hello World!'
+//   }));
+// }
+
+// //Necessary google maps function that is called upon searching
+// function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+//   infoWindow.setPosition(pos);
+//   infoWindow.setContent(browserHasGeolocation ?
+//     'Error: The Geolocation service failed.' :
+//     'Error: Your browser doesn\'t support geolocation.');
+//   infoWindow.open(map);
+// };
+
+// var crimePos = {
+//   lat: data[i].location.coordinates[0],
+//   lng: data[i].location.coordinates[1]
+// };
