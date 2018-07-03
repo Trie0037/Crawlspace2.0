@@ -8,7 +8,7 @@ $(document).ready(function () {
   // Enables the submit button only when there is text in the dialog box
   // Disables the button if text is not present
   $(".input").keyup(function () {
-    if ($("#currentPub").val() == "" || $("#destination").val() == "" || $("#travel-time").val() == "") {
+    if ($("#currentPub").val() == "" || $("#destination").val() == "") {
       $("#modalSubmitBtn").prop("disabled", true);
     } else {
       $("#modalSubmitBtn").removeAttr("disabled");
@@ -98,6 +98,7 @@ $(document).ready(function () {
     });
 
     var markers = [];
+    var crimeMarker = [];
 
     // Listen for the event fired when the user selects a prediction and retrieve
     // more details for that place.
@@ -113,6 +114,7 @@ $(document).ready(function () {
         marker.setMap(null);
       });
       markers = [];
+      crimeMarker = [];
 
       // For each place, get the icon, name and location.
       var bounds = new google.maps.LatLngBounds();
@@ -120,30 +122,40 @@ $(document).ready(function () {
         if (!place.geometry) {
           console.log("Returned place contains no geometry");
           return;
-        }
-        var icon = {
-          url: place.icon,
-          size: new google.maps.Size(71, 71),
-          origin: new google.maps.Point(0, 0),
-          anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(25, 25)
         };
 
         //Initialize variables for SF Crime AJAX search
         var lat = place.geometry.location.lat();
         var long = place.geometry.location.lng();
         //Remove "limit" below or increase for final product
-        var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 1600) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 10';
+        var queryString = 'Select * where within_circle(location,' + lat + "," + long + ', 400) and date between "2017-06-10T12:00:00" and "2018-06-10T14:00:00" Limit 150';
 
+        // places.name (header)
+        // places.formatted_address (address)
+        // places.formatted_phone_number (phone number)
+        // places.opening_hours.weekday_text
+        // places.price_level
+        // places.rating
+        // places.website
         //Pushes the searched markers to a list of markers
         markers.push(new google.maps.Marker({
           map: map,
-          icon: icon,
+          icon: "assets/images/marker.png",
           title: place.name,
           position: place.geometry.location,
           animation: google.maps.Animation.DROP
         }));
-        console.log(markers);
+        console.log(markers)
+        for (var i = 0; i < markers.length; i++){
+          google.maps.event.addListener(markers[i], "click", function(){
+              infowindow.setContent(
+              "<div><h3>" + this.title + "</h3>" 
+              // "<div>Date: " + this.date + "<br>" +
+              // "Time: " + this.time + "</div></div>"
+            );
+            infowindow.open(map, this);
+          });
+        };
 
         //Searches the SF crime database
         $.ajax({
@@ -156,14 +168,34 @@ $(document).ready(function () {
           console.log(data);
           //Loops through the amount of crimes returned
           for (var i = 0; i < data.length; i++) {
-            var crimePos = new google.maps.LatLng(data[i].location.coordinates[0], data[i].location.coordinates[1])
+            var crimePos = new google.maps.LatLng(data[i].location.coordinates[1], data[i].location.coordinates[0]);
+            if (data[i].date.length > 10){
+              var dateTime = data[i].date.substr(0, 10);
+            }
             //Adds the current crime to the map as a marker
-            markers.push(new google.maps.Marker({
+            crimeMarker.push(new google.maps.Marker({
               map: map,
-              title: "Hello World!",
+              icon: "assets/images/crime.png",
+              title: "Click for more info",
+              date: dateTime,
+              time: data[i].time,
+              crimeType: data[i].category,
               position: crimePos,
               animation: google.maps.Animation.DROP
             }));
+          };
+
+          // This is the info window for the crime markers
+          // Shows the type of crime, date, and time
+          for (var i = 0; i < crimeMarker.length; i++){
+            google.maps.event.addListener(crimeMarker[i], "click", function(){
+                infowindow.setContent(
+                "<div><h3>" + this.crimeType + "</h3>" +
+                "<div>Date: " + this.date + "<br>" +
+                "Time: " + this.time + "</div></div>"
+              );
+              infowindow.open(map, this);
+            });
           };
         });
 
@@ -186,18 +218,16 @@ $(document).ready(function () {
   //Listens for when the Submit button is clicked
   $("#modalSubmitBtn").click(function () {
     // Close the modal box
-    modal.style.display = "none";
+    searchModal.style.display = "none";
     $("#modalSubmitBtn").prop("disabled", true);
 
     // Creating variables for modal input values
     var pubName = $("#currentPub").val().trim();
     var nextDestination = $("#destination").val().trim();
-    var travelTime = $("#travel-time").val().trim();
 
     database.ref().push({
       Pub: pubName,
       Destination: nextDestination,
-      Travel: travelTime,
       dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
   });
@@ -215,11 +245,10 @@ $(document).ready(function () {
     // Place user inputs into the table
     // Creates new td tags to place user inputs in
     // td will be our cells
-    var pubName = $("<tD>").html(childSnapshot.val().Pub);
+    var pubName = $("<td>").html(childSnapshot.val().Pub);
     var nextDestination = $("<td>").html(childSnapshot.val().Destination);
-    var travelTime = $("<td>").html(childSnapshot.val().Travel);
-    tableRow.append(pubName, nextDestination, travelTime);
-    tableBody.append(tableRow);
+    tableRow.append(pubName, nextDestination);
+    tableBody.append(tableRow)
   });
 
   ///END FUNCTION CALLS
@@ -228,28 +257,27 @@ $(document).ready(function () {
 ///END///
 
 ///MODAL///
-var modal = document.getElementById("searchModal");
-var btn = document.getElementById("searchLocal"); // Get the button that opens the modal
+var searchModal = document.getElementById("searchModal");
+var addListBtn = document.getElementById("addList"); // Get the button that opens the modal
 var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
 
 // When the user clicks the button, open the modal 
-btn.onclick = function () {
+addListBtn.onclick = function () {
   $("#currentPub").val("");
   $("#destination").val("");
-  $("#travel-time").val("");
-  modal.style.display = "block";
+  $("#modalSubmitBtn").prop("disabled", true);
+  searchModal.style.display = "block";
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+searchModal.onclick = function (event) {
+  if (event.target == searchModal) {
+    searchModal.style.display = "none";
   }
 }
 
 // When the user clicks the cancel button,
 // remove the modal and disable the sumbit button
 $("#modalCancelBtn").on("click", function () {
-  modal.style.display = "none";
-  $("#modalSubmitBtn").prop("disabled", true);
+  searchModal.style.display = "none";
 })
