@@ -23,7 +23,7 @@
                     <input id="pac-input" class="controls" type="text" placeholder=" Search A Location">
                 </div>
                 <div class="col-md-4 text-center">
-                    <button id="searchLocal" class="btn btn-sm">Search Local Area</button>
+                    <button id="addList" class="btn btn-sm">Add to List</button>
                 </div>
             </div>
         </div>
@@ -61,7 +61,6 @@
                                 <tr>
                                     <th>Current</th>
                                     <th>Destination</th>
-                                    <th>Time Travel</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -84,16 +83,34 @@
                     <label for="destination">Destination Pub</label>
                     <input type="text" class="form-control input" id="destination" placeholder="Required field">
                 </div>
-                <div class="form-group">
-                    <label for="travel-time">Travel time (in minutes)</label>
-                    <input type="number" class="form-control input" id="travel-time" type="number" min="0" placeholder="Required field">
-                </div>
                 <button type="button" class="btn btn-default" id="modalSubmitBtn">Submit</button>
                 <button type="button" class="btn btn-default" id="modalCancelBtn">Cancel</button>
             </form>
         </div>
     </div>
     <!-- End Search Modal -->
+
+    <!-- Delete  Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this entry?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">Are you sure you want to delete this Record?</div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" id="deleteEntry">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Delete Modal -->
 
     <!-- Footer -->
     <footer class="modal-footer">
@@ -107,7 +124,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWffI4S98URwn_yAiK-P7GZ46k4j8SfL0&libraries=places,geometry"></script>
-
+    <!-- Javascipt -->
     <script src="assets/javascript/main.js"></script>
 
 </body>
